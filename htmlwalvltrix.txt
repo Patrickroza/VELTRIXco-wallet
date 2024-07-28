@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Obter Endereço da Carteira Veltrix</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js"></script>
+</head>
+<body>
+    <h2>Obter Endereço da Carteira Veltrix</h2>
+    <button onclick="connectWallet()">Conectar Carteira</button>
+    <button onclick="getWalletAddress()">Obter Endereço</button>
+    <div id="endereco"></div>
+
+    <script>
+        let web3;
+
+        async function connectWallet() {
+            if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
+                try {
+                    await window.ethereum.enable();
+                    alert("Carteira conectada!");
+                } catch (error) {
+                    alert("Usuário rejeitou a conexão");
+                }
+            } else {
+                alert("Metamask não detectado!");
+            }
+        }
+
+        async function getWalletAddress() {
+            if (!web3) {
+                alert("Conecte a carteira primeiro!");
+                return;
+            }
+            const addresses = await web3.eth.getAccounts();
+            if (addresses.length > 0) {
+                const walletAddress = addresses[0];
+                document.getElementById('endereco').innerText = Endereço da Carteira: ${walletAddress};
+            } else {
+                alert("Nenhum endereço encontrado. Certifique-se de que a carteira está conectada.");
+            }
+        }
+    </script>
+</body>
+</html>
